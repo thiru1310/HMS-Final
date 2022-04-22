@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HospitalScheduleManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="tblAdmin">
+    <Key>
+      <PropertyRef Name="AdminId" />
+    </Key>
+    <Property Name="AdminId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="200" />
+    <Property Name="Password" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="tblAppointment">
+    <Key>
+      <PropertyRef Name="AppointmentId" />
+    </Key>
+    <Property Name="AppointmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Symptoms" Type="varchar" MaxLength="200" />
+    <Property Name="PatientId" Type="int" />
+    <Property Name="DoctorId" Type="int" />
+    <Property Name="DiseaseCategory" Type="int" />
+    <Property Name="StartTime" Type="smalldatetime" />
+    <Property Name="EndTime" Type="smalldatetime" />
+  </EntityType>
+  <EntityType Name="tblDisease">
+    <Key>
+      <PropertyRef Name="DiseaseId" />
+    </Key>
+    <Property Name="DiseaseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DiseaseName" Type="varchar" MaxLength="100" />
+    <Property Name="CategoryId" Type="int" />
+  </EntityType>
+  <EntityType Name="tblDiseaseCategory">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tblDoctor">
+    <Key>
+      <PropertyRef Name="DoctorId" />
+    </Key>
+    <Property Name="DoctorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DoctorName" Type="varchar" MaxLength="200" />
+    <Property Name="DOB" Type="date" />
+    <Property Name="Gender" Type="varchar" MaxLength="50" />
+    <Property Name="DoorNo" Type="varchar" MaxLength="50" />
+    <Property Name="StreetName" Type="varchar" MaxLength="300" />
+    <Property Name="City" Type="varchar" MaxLength="100" />
+    <Property Name="District" Type="varchar" MaxLength="100" />
+    <Property Name="PinCode" Type="int" />
+    <Property Name="MobileNumber" Type="bigint" />
+    <Property Name="EmailId" Type="varchar" MaxLength="500" />
+    <Property Name="Password" Type="varchar" MaxLength="100" />
+    <Property Name="Specialization" Type="varchar" MaxLength="150" />
+    <Property Name="Education" Type="varchar" MaxLength="200" />
+    <Property Name="CategoryId" Type="int" />
+    <Property Name="Schedule" Type="int" />
+  </EntityType>
+  <EntityType Name="tblPatient">
+    <Key>
+      <PropertyRef Name="PatientId" />
+    </Key>
+    <Property Name="PatientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="100" />
+    <Property Name="LastName" Type="varchar" MaxLength="100" />
+    <Property Name="DOB" Type="date" />
+    <Property Name="Gender" Type="varchar" MaxLength="50" />
+    <Property Name="DoorNo" Type="varchar" MaxLength="50" />
+    <Property Name="StreetName" Type="varchar" MaxLength="300" />
+    <Property Name="City" Type="varchar" MaxLength="100" />
+    <Property Name="District" Type="varchar" MaxLength="100" />
+    <Property Name="PinCode" Type="int" />
+    <Property Name="BloodGroup" Type="varchar" MaxLength="20" />
+    <Property Name="MobileNumber" Type="bigint" />
+    <Property Name="EmailId" Type="varchar" MaxLength="500" />
+    <Property Name="UserId" Type="int" />
+  </EntityType>
+  <EntityType Name="tblPatientDisease">
+    <Key>
+      <PropertyRef Name="PatientDiseaseId" />
+    </Key>
+    <Property Name="PatientDiseaseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PatientId" Type="int" />
+    <Property Name="DiseaseId" Type="int" />
+  </EntityType>
+  <EntityType Name="tblTimeSchedule">
+    <Key>
+      <PropertyRef Name="TimeId" />
+    </Key>
+    <Property Name="TimeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FromTime" Type="smalldatetime" />
+    <Property Name="ToTime" Type="smalldatetime" />
+  </EntityType>
+  <EntityType Name="tblUserDetail">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="200" />
+    <Property Name="Email" Type="varchar" MaxLength="500" />
+    <Property Name="PhoneNo" Type="bigint" />
+    <Property Name="PassWord" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <Association Name="FK__tblAppoin__Disea__6FE99F9F">
+    <End Role="tblDiseaseCategory" Type="Self.tblDiseaseCategory" Multiplicity="0..1" />
+    <End Role="tblAppointment" Type="Self.tblAppointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblDiseaseCategory">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="tblAppointment">
+        <PropertyRef Name="DiseaseCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblAppoin__Docto__6EF57B66">
+    <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="0..1" />
+    <End Role="tblAppointment" Type="Self.tblAppointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblDoctor">
+        <PropertyRef Name="DoctorId" />
+      </Principal>
+      <Dependent Role="tblAppointment">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblAppoin__Patie__6E01572D">
+    <End Role="tblPatient" Type="Self.tblPatient" Multiplicity="0..1" />
+    <End Role="tblAppointment" Type="Self.tblAppointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPatient">
+        <PropertyRef Name="PatientId" />
+      </Principal>
+      <Dependent Role="tblAppointment">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblDiseas__Categ__6477ECF3">
+    <End Role="tblDiseaseCategory" Type="Self.tblDiseaseCategory" Multiplicity="0..1" />
+    <End Role="tblDisease" Type="Self.tblDisease" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblDiseaseCategory">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="tblDisease">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblDoctor__Categ__6B24EA82">
+    <End Role="tblDiseaseCategory" Type="Self.tblDiseaseCategory" Multiplicity="0..1" />
+    <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblDiseaseCategory">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="tblDoctor">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblPatien__Disea__68487DD7">
+    <End Role="tblDisease" Type="Self.tblDisease" Multiplicity="0..1" />
+    <End Role="tblPatientDisease" Type="Self.tblPatientDisease" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblDisease">
+        <PropertyRef Name="DiseaseId" />
+      </Principal>
+      <Dependent Role="tblPatientDisease">
+        <PropertyRef Name="DiseaseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblPatien__Patie__6754599E">
+    <End Role="tblPatient" Type="Self.tblPatient" Multiplicity="0..1" />
+    <End Role="tblPatientDisease" Type="Self.tblPatientDisease" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPatient">
+        <PropertyRef Name="PatientId" />
+      </Principal>
+      <Dependent Role="tblPatientDisease">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblPatien__UserI__09A971A2">
+    <End Role="tblUserDetail" Type="Self.tblUserDetail" Multiplicity="0..1" />
+    <End Role="tblPatient" Type="Self.tblPatient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUserDetail">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="tblPatient">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblDoctor_tblTimeSchedule">
+    <End Role="tblTimeSchedule" Type="Self.tblTimeSchedule" Multiplicity="0..1" />
+    <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblTimeSchedule">
+        <PropertyRef Name="TimeId" />
+      </Principal>
+      <Dependent Role="tblDoctor">
+        <PropertyRef Name="Schedule" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="spAppointment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="HospitalScheduleManagementModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblAdmin" EntityType="Self.tblAdmin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblAppointment" EntityType="Self.tblAppointment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblDisease" EntityType="Self.tblDisease" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblDiseaseCategory" EntityType="Self.tblDiseaseCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblDoctor" EntityType="Self.tblDoctor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblPatient" EntityType="Self.tblPatient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblPatientDisease" EntityType="Self.tblPatientDisease" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblTimeSchedule" EntityType="Self.tblTimeSchedule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblUserDetail" EntityType="Self.tblUserDetail" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__tblAppoin__Disea__6FE99F9F" Association="Self.FK__tblAppoin__Disea__6FE99F9F">
+      <End Role="tblDiseaseCategory" EntitySet="tblDiseaseCategory" />
+      <End Role="tblAppointment" EntitySet="tblAppointment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblAppoin__Docto__6EF57B66" Association="Self.FK__tblAppoin__Docto__6EF57B66">
+      <End Role="tblDoctor" EntitySet="tblDoctor" />
+      <End Role="tblAppointment" EntitySet="tblAppointment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblAppoin__Patie__6E01572D" Association="Self.FK__tblAppoin__Patie__6E01572D">
+      <End Role="tblPatient" EntitySet="tblPatient" />
+      <End Role="tblAppointment" EntitySet="tblAppointment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblDiseas__Categ__6477ECF3" Association="Self.FK__tblDiseas__Categ__6477ECF3">
+      <End Role="tblDiseaseCategory" EntitySet="tblDiseaseCategory" />
+      <End Role="tblDisease" EntitySet="tblDisease" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblDoctor__Categ__6B24EA82" Association="Self.FK__tblDoctor__Categ__6B24EA82">
+      <End Role="tblDiseaseCategory" EntitySet="tblDiseaseCategory" />
+      <End Role="tblDoctor" EntitySet="tblDoctor" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblPatien__Disea__68487DD7" Association="Self.FK__tblPatien__Disea__68487DD7">
+      <End Role="tblDisease" EntitySet="tblDisease" />
+      <End Role="tblPatientDisease" EntitySet="tblPatientDisease" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblPatien__Patie__6754599E" Association="Self.FK__tblPatien__Patie__6754599E">
+      <End Role="tblPatient" EntitySet="tblPatient" />
+      <End Role="tblPatientDisease" EntitySet="tblPatientDisease" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblPatien__UserI__09A971A2" Association="Self.FK__tblPatien__UserI__09A971A2">
+      <End Role="tblUserDetail" EntitySet="tblUserDetail" />
+      <End Role="tblPatient" EntitySet="tblPatient" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblDoctor_tblTimeSchedule" Association="Self.FK_tblDoctor_tblTimeSchedule">
+      <End Role="tblTimeSchedule" EntitySet="tblTimeSchedule" />
+      <End Role="tblDoctor" EntitySet="tblDoctor" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

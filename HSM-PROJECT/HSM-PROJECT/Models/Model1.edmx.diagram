@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="577017e2dca54605b2838e845448c5b9" Name="Diagram1">
+        <EntityTypeShape EntityType="HospitalScheduleManagementModel.sysdiagram" Width="1.5" PointX="8.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalScheduleManagementModel.tblAdmin" Width="1.5" PointX="8.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalScheduleManagementModel.tblAppointment" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalScheduleManagementModel.tblDisease" Width="1.5" PointX="6" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalScheduleManagementModel.tblDiseaseCategory" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalScheduleManagementModel.tblDoctor" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalScheduleManagementModel.tblPatient" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalScheduleManagementModel.tblPatientDisease" Width="1.5" PointX="8.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalScheduleManagementModel.tblTimeSchedule" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalScheduleManagementModel.tblUserDetail" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
+        <AssociationConnector Association="HospitalScheduleManagementModel.FK__tblAppoin__Disea__6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalScheduleManagementModel.FK__tblAppoin__Docto__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalScheduleManagementModel.FK__tblAppoin__Patie__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalScheduleManagementModel.FK__tblDiseas__Categ__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalScheduleManagementModel.FK__tblPatien__Disea__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalScheduleManagementModel.FK__tblDoctor__Categ__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalScheduleManagementModel.FK_tblDoctor_tblTimeSchedule" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalScheduleManagementModel.FK__tblPatien__Patie__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalScheduleManagementModel.FK__tblPatien__UserI__09A971A2" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
