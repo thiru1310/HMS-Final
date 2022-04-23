@@ -14,14 +14,35 @@ namespace HSM_PROJECT.Controllers
             {
                 if (Session["Email"]==null)
                 {
-                    return RedirectToAction("Login","UserDetail");
-                }
-            }catch 
+                    try
+                    {
 
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                    
+                    return RedirectToAction("Login", "UserDetail");
+
+                }
+                int j = 0;
+                int i = 10 / j;
+
+            }
+            catch (DivideByZeroException e)
+
+            {
+
+                return RedirectToAction("Login", "UserDetail");
+            }
+            catch(Exception e)
             {
 
             }
             return View();
+
         }
 
         public ActionResult About()
