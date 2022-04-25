@@ -114,8 +114,7 @@
       <PropertyRef Name="TimeId" />
     </Key>
     <Property Name="TimeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FromTime" Type="DateTime" Precision="0" />
-    <Property Name="ToTime" Type="DateTime" Precision="0" />
+    <Property Name="FromTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="tblDoctors" Relationship="Self.FK_tblDoctor_tblTimeSchedule" FromRole="tblTimeSchedule" ToRole="tblDoctor" />
   </EntityType>
   <EntityType Name="tblUserDetail">
@@ -284,17 +283,5 @@
       <End Role="tblUserDetail" EntitySet="tblUserDetails" />
       <End Role="tblPatient" EntitySet="tblPatients" />
     </AssociationSet>
-    <FunctionImport Name="spAppointment" ReturnType="Collection(HospitalScheduleManagementModel.spAppointment_Result)">
-      <Parameter Name="id" Mode="In" Type="Int32" />
-    </FunctionImport>
   </EntityContainer>
-  <ComplexType Name="spAppointment_Result">
-    <Property Type="Int32" Name="AppointmentId" Nullable="false" />
-    <Property Type="String" Name="Symptoms" Nullable="true" MaxLength="200" />
-    <Property Type="Int32" Name="PatientId" Nullable="true" />
-    <Property Type="Int32" Name="DoctorId" Nullable="true" />
-    <Property Type="Int32" Name="DiseaseCategory" Nullable="true" />
-    <Property Type="DateTime" Name="StartTime" Nullable="true" Precision="16" />
-    <Property Type="DateTime" Name="EndTime" Nullable="true" Precision="16" />
-  </ComplexType>
 </Schema>

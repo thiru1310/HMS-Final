@@ -103,8 +103,7 @@
             <PropertyRef Name="TimeId" />
           </Key>
           <Property Name="TimeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FromTime" Type="smalldatetime" />
-          <Property Name="ToTime" Type="smalldatetime" />
+          <Property Name="FromTime" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="tblUserDetail">
           <Key>
@@ -224,9 +223,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="spAppointment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="id" Type="int" Mode="In" />
-        </Function>
         <EntityContainer Name="HospitalScheduleManagementModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAdmin" EntityType="Self.tblAdmin" Schema="dbo" store:Type="Tables" />
@@ -394,8 +390,7 @@
             <PropertyRef Name="TimeId" />
           </Key>
           <Property Name="TimeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FromTime" Type="DateTime" Precision="0" />
-          <Property Name="ToTime" Type="DateTime" Precision="0" />
+          <Property Name="FromTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblDoctors" Relationship="Self.FK_tblDoctor_tblTimeSchedule" FromRole="tblTimeSchedule" ToRole="tblDoctor" />
         </EntityType>
         <EntityType Name="tblUserDetail">
@@ -564,19 +559,7 @@
             <End Role="tblUserDetail" EntitySet="tblUserDetails" />
             <End Role="tblPatient" EntitySet="tblPatients" />
           </AssociationSet>
-          <FunctionImport Name="spAppointment" ReturnType="Collection(HospitalScheduleManagementModel.spAppointment_Result)">
-            <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="spAppointment_Result">
-          <Property Type="Int32" Name="AppointmentId" Nullable="false" />
-          <Property Type="String" Name="Symptoms" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="PatientId" Nullable="true" />
-          <Property Type="Int32" Name="DoctorId" Nullable="true" />
-          <Property Type="Int32" Name="DiseaseCategory" Nullable="true" />
-          <Property Type="DateTime" Name="StartTime" Nullable="true" Precision="16" />
-          <Property Type="DateTime" Name="EndTime" Nullable="true" Precision="16" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -689,7 +672,6 @@
               <MappingFragment StoreEntitySet="tblTimeSchedule">
                 <ScalarProperty Name="TimeId" ColumnName="TimeId" />
                 <ScalarProperty Name="FromTime" ColumnName="FromTime" />
-                <ScalarProperty Name="ToTime" ColumnName="ToTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -704,19 +686,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spAppointment" FunctionName="HospitalScheduleManagementModel.Store.spAppointment">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="HospitalScheduleManagementModel.spAppointment_Result">
-                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
-                <ScalarProperty Name="Symptoms" ColumnName="Symptoms" />
-                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
-                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
-                <ScalarProperty Name="DiseaseCategory" ColumnName="DiseaseCategory" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
