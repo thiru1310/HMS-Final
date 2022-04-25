@@ -98,7 +98,8 @@
       <PropertyRef Name="TimeId" />
     </Key>
     <Property Name="TimeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="FromTime" Type="varchar" MaxLength="20" />
+    <Property Name="FromTime" Type="smalldatetime" />
+    <Property Name="ToTime" Type="smalldatetime" />
   </EntityType>
   <EntityType Name="tblUserDetail">
     <Key>
@@ -218,6 +219,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="spAppointment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="HospitalScheduleManagementModelStoreContainer">
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblAdmin" EntityType="Self.tblAdmin" Schema="dbo" store:Type="Tables" />

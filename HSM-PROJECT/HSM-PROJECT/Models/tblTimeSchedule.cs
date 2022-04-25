@@ -21,7 +21,8 @@ namespace HSM_PROJECT.Models
         }
     
         public int TimeId { get; set; }
-        public string FromTime { get; set; }
+        public Nullable<System.DateTime> FromTime { get; set; }
+        public Nullable<System.DateTime> ToTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblDoctor> tblDoctors { get; set; }

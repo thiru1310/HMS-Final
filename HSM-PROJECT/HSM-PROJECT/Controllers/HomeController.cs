@@ -7,27 +7,42 @@ using System.Web.Mvc;
 namespace HSM_PROJECT.Controllers
 {
     public class HomeController : Controller
-    { 
+    {
         public ActionResult Index()
         {
             try
             {
                 if (Session["Email"]==null)
                 {
-                    
+                    try
+                    {
+                    //this is vinoth
+                    // this is thiru
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
                     
                     return RedirectToAction("Login", "UserDetail");
 
                 }
+                int j = 0;
+                int i = 10 / j;
 
-                return View();
             }
-            
+            catch (DivideByZeroException e)
+
+            {
+
+                return RedirectToAction("Login", "UserDetail");
+            }
             catch(Exception e)
             {
-                 return RedirectToAction("Login", "UserDetail");
+
             }
-           
+            return View();
 
         }
 
