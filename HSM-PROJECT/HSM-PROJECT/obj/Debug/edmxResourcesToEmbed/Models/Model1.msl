@@ -107,7 +107,6 @@
         <MappingFragment StoreEntitySet="tblTimeSchedule">
           <ScalarProperty Name="TimeId" ColumnName="TimeId" />
           <ScalarProperty Name="FromTime" ColumnName="FromTime" />
-          <ScalarProperty Name="ToTime" ColumnName="ToTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -122,18 +121,5 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="spAppointment" FunctionName="HospitalScheduleManagementModel.Store.spAppointment">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="HospitalScheduleManagementModel.spAppointment_Result">
-          <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
-          <ScalarProperty Name="Symptoms" ColumnName="Symptoms" />
-          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
-          <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
-          <ScalarProperty Name="DiseaseCategory" ColumnName="DiseaseCategory" />
-          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

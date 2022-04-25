@@ -12,8 +12,6 @@ namespace HSM_PROJECT.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
     
     public partial class HospitalScheduleManagementEntities : DbContext
     {
@@ -37,14 +35,5 @@ namespace HSM_PROJECT.Models
         public virtual DbSet<tblPatientDisease> tblPatientDiseases { get; set; }
         public virtual DbSet<tblTimeSchedule> tblTimeSchedules { get; set; }
         public virtual DbSet<tblUserDetail> tblUserDetails { get; set; }
-    
-        public virtual ObjectResult<spAppointment_Result> spAppointment(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spAppointment_Result>("spAppointment", idParameter);
-        }
     }
 }

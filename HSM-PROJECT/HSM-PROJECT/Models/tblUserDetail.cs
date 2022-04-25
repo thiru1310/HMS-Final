@@ -11,7 +11,7 @@ namespace HSM_PROJECT.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
     public partial class tblUserDetail
     {
@@ -41,7 +41,7 @@ namespace HSM_PROJECT.Models
         [Required]
         [DataType(DataType.Password)]
         [StringLength(100, ErrorMessage = "Password \"{0}\" must have {2} character", MinimumLength = 6)]
-        [Compare("PassWord", ErrorMessage ="Not match")]
+        [Compare("PassWord", ErrorMessage = "Not match")]
         public string ConfirmPassWord { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
