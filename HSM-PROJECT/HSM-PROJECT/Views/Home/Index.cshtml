@@ -2,7 +2,17 @@
 @{
     ViewBag.Title = "Index";
 }
+<html>
+<head>
+    <script type="text/javascript">
+    function preventBack() { window.history.forward() };
+    setTimeout("preventBack()", 0);
+    window.onunload = function () { null;}
+    </script>
+</head>
+<body>
+    <h2>Index</h2>
 
-<h2>Index</h2>
-
-<h1>Hello Welcome</h1>
+    <h1>Hello Welcome</h1>
+</body>
+</html>
