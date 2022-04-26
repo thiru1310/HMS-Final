@@ -1,0 +1,33 @@
+﻿@model HSM_PROJECT.Models.tblDoctor
+@{
+    ViewBag.Title = "DoctorLogin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="text-center">
+    <h2>Login for Doctors only</h2>
+    @using (Html.BeginForm("Autherize", "Doctor", FormMethod.Post))
+    {
+        <div class="alert-danger">
+            @Html.ValidationSummary(true)
+        </div>
+        <div>
+            <div>
+                @Html.LabelFor(p => p.EmailId)
+                @Html.EditorFor(p => p.EmailId)
+                <div class="alert-danger">
+                    @Html.ValidationMessageFor(p => p.EmailId)
+                </div>
+            </div>
+        </div>
+        <div>
+            @Html.LabelFor(p => p.Password)
+            @Html.PasswordFor(p => p.Password)
+            <div class="alert-danger">
+                @Html.ValidationMessageFor(p => p.Password)
+            </div>
+        </div>
+        <div>
+            <input type="submit" value="Login" class="btn btn-success" />
+        </div>
+    }
+</div>

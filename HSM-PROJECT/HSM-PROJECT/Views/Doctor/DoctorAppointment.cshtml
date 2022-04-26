@@ -1,0 +1,71 @@
+﻿@model IEnumerable<HSM_PROJECT.Models.tblAppointment>
+@{
+    ViewBag.Title = "DoctorAppointment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (Session["DoctorId"] == null)
+    {
+        Response.Redirect("~/Doctor/Index");
+    }
+}
+<div class="row d-flex justify-content-between">
+    @if (Session["DoctorName"] != null)
+    {
+        <h2> Appointment for Dr.@Session["DoctorName"].ToString()</h2>
+    }
+
+    <a href="@Url.Action("LogOut","Doctor")" class="btn btn-danger"> Logout</a>
+</div>
+<br />
+<hr />
+<br />
+<br />
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <th>
+            PatientName
+        </th>
+        <th>
+            Disease
+        </th>
+        <th>
+            Symptomes
+        </th>
+        <th>
+            StartTime
+        </th>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.tblPatient.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Symptoms)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.tblDiseaseCategory.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.StartTime)
+                </td>
+                <td>
+                    <input type="button" class="btn btn-success confirm" value="Confirm" />
+                </td>
+                <td>
+                    <input type="button" class="btn btn-danger cancel" value="Cancel"  />
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.confirm').click(function () {
+            $(this).hide();
+        });
+    });
+</script>
+
