@@ -1,0 +1,85 @@
+C:\bthinq\training\Webapi sample\Webapi sample\bin\Webapi sample.dll.config
+C:\bthinq\training\Webapi sample\Webapi sample\bin\Webapi sample.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\Webapi sample.pdb
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\csc.exe
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\csc.exe.config
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\csc.rsp
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\csi.exe
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\csi.exe.config
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\csi.rsp
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\Microsoft.Managed.Core.targets
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.AppContext.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Collections.Immutable.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Console.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Globalization.Calendars.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.IO.Compression.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.IO.FileSystem.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Net.Http.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Net.Sockets.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Reflection.Metadata.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.ValueTuple.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Xml.XmlDocument.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Xml.XPath.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\vbc.exe
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\vbc.exe.config
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\vbc.rsp
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\VBCSCompiler.exe
+C:\bthinq\training\Webapi sample\Webapi sample\bin\roslyn\VBCSCompiler.exe.config
+C:\bthinq\training\Webapi sample\Webapi sample\bin\Antlr3.Runtime.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\Microsoft.Web.Infrastructure.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\Newtonsoft.Json.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Net.Http.Formatting.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.Helpers.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.Http.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.Http.WebHost.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.Mvc.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.Optimization.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.Razor.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.WebPages.Deployment.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.WebPages.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.WebPages.Razor.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\WebGrease.dll
+C:\bthinq\training\Webapi sample\Webapi sample\bin\Newtonsoft.Json.xml
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Net.Http.Formatting.xml
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.Helpers.xml
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.Http.xml
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.Http.WebHost.xml
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.Mvc.xml
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.Optimization.xml
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.Razor.xml
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.WebPages.xml
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.WebPages.Deployment.xml
+C:\bthinq\training\Webapi sample\Webapi sample\bin\System.Web.WebPages.Razor.xml
+C:\bthinq\training\Webapi sample\Webapi sample\bin\Antlr3.Runtime.pdb
+C:\bthinq\training\Webapi sample\Webapi sample\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\bthinq\training\Webapi sample\Webapi sample\obj\Debug\Webapi sample.csproj.AssemblyReference.cache
+C:\bthinq\training\Webapi sample\Webapi sample\obj\Debug\Webapi sample.csproj.CoreCompileInputs.cache
+C:\bthinq\training\Webapi sample\Webapi sample\obj\Debug\Webapi sample.csproj.CopyComplete
+C:\bthinq\training\Webapi sample\Webapi sample\obj\Debug\Webapi sample.dll
+C:\bthinq\training\Webapi sample\Webapi sample\obj\Debug\Webapi sample.pdb
