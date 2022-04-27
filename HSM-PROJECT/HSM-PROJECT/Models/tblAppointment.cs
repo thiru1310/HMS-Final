@@ -25,5 +25,8 @@ namespace HSM_PROJECT.Models
         public virtual tblDiseaseCategory tblDiseaseCategory { get; set; }
         public virtual tblDoctor tblDoctor { get; set; }
         public virtual tblPatient tblPatient { get; set; }
+
+        public int Action { get; set; }
+
     }
 }
