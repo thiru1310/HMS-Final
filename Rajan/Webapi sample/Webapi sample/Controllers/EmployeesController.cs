@@ -24,11 +24,10 @@ namespace Webapi_sample.Controllers
         {  
             {
                 var employeeDetails = entities1.EmployeeDetails.ToList();
-                string username = Thread.CurrentPrincipal.Identity.Name;
-                var entity = entities1.UserLogins.FirstOrDefault(x => x.UserName == username);
+                
                 try
                 {
-                    if (entity != null)
+                    if (employeeDetails != null)
                     {
                         return Request.CreateResponse(HttpStatusCode.OK, employeeDetails);
                     }
@@ -48,14 +47,11 @@ namespace Webapi_sample.Controllers
         [Route("api/Employees/{Id}")]
         public HttpResponseMessage GetEmployee(int id)
         {
-            {
                 try
                 {
                     var employeeDetail = entities1.EmployeeDetails.FirstOrDefault(e => e.Id == id);
-                    string username = Thread.CurrentPrincipal.Identity.Name;
-                    var entity = entities1.UserLogins.FirstOrDefault(x => x.UserName == username);
 
-                    if (entity != null)
+                    if (employeeDetail != null)
                     {
                         return Request.CreateResponse(HttpStatusCode.OK, employeeDetail);
                     }
@@ -69,7 +65,6 @@ namespace Webapi_sample.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
 
                 }
-            }
 
         }
 
@@ -78,11 +73,9 @@ namespace Webapi_sample.Controllers
         {
             try
             {
-                string username = Thread.CurrentPrincipal.Identity.Name;
-                var entity = entities1.UserLogins.FirstOrDefault(x => x.UserName == username);
+     
 
-
-                if (entity != null)
+                if (employee != null)
                 {
                     entities1.EmployeeDetails.Add(employee);
                     entities1.SaveChanges();
@@ -108,12 +101,9 @@ namespace Webapi_sample.Controllers
         {
             try
             {
-                {
-                    string username = Thread.CurrentPrincipal.Identity.Name;
-                    var updateEmployee = entities1.UserLogins.FirstOrDefault(x => x.UserName == username);
                     var entity = entities1.EmployeeDetails.FirstOrDefault(e => e.Id == id);
 
-                    if (updateEmployee == null)
+                    if (entity == null)
                     {
                         return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Employee with Id = " + id.ToString() + "not found to update");
                     }
@@ -127,7 +117,7 @@ namespace Webapi_sample.Controllers
                         var message = Request.CreateResponse(HttpStatusCode.OK, entity);
                         return message;
                     }
-                }
+                
             }
             catch (Exception ex)
             {
@@ -141,11 +131,8 @@ namespace Webapi_sample.Controllers
         {
             try
             {
-                {
-                    string username = Thread.CurrentPrincipal.Identity.Name;
-                    var DeleteEmployee = entities1.UserLogins.FirstOrDefault(x => x.UserName == username);
                     var entity = entities1.EmployeeDetails.FirstOrDefault(e => e.Id == id);
-                    if (DeleteEmployee == null)
+                    if (entity == null)
                     {
                         return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Employee with Id = " + id.ToString() + " Not found to delete");
                     }
@@ -155,8 +142,6 @@ namespace Webapi_sample.Controllers
                         entities1.SaveChanges();
                         return Request.CreateResponse(HttpStatusCode.OK, "Id = "+id.ToString() + " Is deleted");
                     }
-
-                }
             }
             catch(Exception ex)
             {
