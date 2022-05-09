@@ -16,6 +16,9 @@ namespace HSM_PROJECT.Controllers
         {
             return View();
         }
+
+        /*creating a branch
+          in our project        */
         [HttpPost]
         public ActionResult Autherize(HSM_PROJECT.Models.tblDoctor doctorModel)
         {
