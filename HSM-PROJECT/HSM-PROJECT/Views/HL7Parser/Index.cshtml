@@ -1,0 +1,737 @@
+@{
+    ViewBag.Title = "HL7 Message to PDF Parser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header">
+                <h1><i class="fa fa-file-pdf-o"></i> HL7 Message to PDF Parser</h1>
+                <p class="lead">Dynamic HL7 message parser and PDF generator for healthcare data processing</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Input Panel -->
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-edit"></i> HL7 Message Input</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="hl7MessageInput">HL7 Message:</label>
+                        <textarea id="hl7MessageInput" class="form-control" rows="15" placeholder="Paste your HL7 message here or use the sample message..."></textarea>
+                    </div>
+                    
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button type="button" class="btn btn-info" onclick="loadSampleMessage()">
+                            <i class="fa fa-file-text"></i> Load Sample
+                        </button>
+                        <button type="button" class="btn btn-warning" onclick="clearMessage()">
+                            <i class="fa fa-trash"></i> Clear
+                        </button>
+                        <button type="button" class="btn btn-success" onclick="validateMessage()">
+                            <i class="fa fa-check"></i> Validate
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configuration Panel -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-cog"></i> Configuration Options
+                        <button class="btn btn-xs btn-default pull-right" onclick="toggleAdvancedOptions()">
+                            <i class="fa fa-chevron-down" id="advancedToggleIcon"></i> Advanced
+                        </button>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <!-- Basic Options -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pdfTitle">PDF Title:</label>
+                                <input type="text" id="pdfTitle" class="form-control" value="HL7 Message Report">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pdfAuthor">Author:</label>
+                                <input type="text" id="pdfAuthor" class="form-control" value="HSM System">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Options (Initially Hidden) -->
+                    <div id="advancedOptions" style="display: none;">
+                        <hr>
+                        <h5><i class="fa fa-file-pdf-o"></i> PDF Options</h5>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="pageFormat">Page Format:</label>
+                                    <select id="pageFormat" class="form-control">
+                                        <option value="0">A4</option>
+                                        <option value="1">Letter</option>
+                                        <option value="2">Legal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="orientation">Orientation:</label>
+                                    <select id="orientation" class="form-control">
+                                        <option value="0">Portrait</option>
+                                        <option value="1">Landscape</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="watermark">Watermark:</label>
+                                    <input type="text" id="watermark" class="form-control" placeholder="Optional watermark text">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="includeHeader" checked> Include Header
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="includeFooter" checked> Include Footer
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="includeRawData"> Include Raw Segment Data
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <h5><i class="fa fa-cogs"></i> Parser Options</h5>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="fieldSeparator">Field Separator:</label>
+                                    <input type="text" id="fieldSeparator" class="form-control" value="|" maxlength="1">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="componentSeparator">Component Sep:</label>
+                                    <input type="text" id="componentSeparator" class="form-control" value="^" maxlength="1">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="repetitionSeparator">Repetition Sep:</label>
+                                    <input type="text" id="repetitionSeparator" class="form-control" value="~" maxlength="1">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="escapeCharacter">Escape Char:</label>
+                                    <input type="text" id="escapeCharacter" class="form-control" value="\" maxlength="1">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="validateMessage" checked> Validate Message Structure
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Output Panel -->
+        <div class="col-md-6">
+            <!-- Action Buttons -->
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-play"></i> Actions</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="btn-group btn-group-justified" role="group">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary btn-lg" onclick="convertToPdf()">
+                                <i class="fa fa-file-pdf-o"></i> Generate PDF
+                            </button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-info btn-lg" onclick="parseMessage()">
+                                <i class="fa fa-search"></i> Parse & Analyze
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group btn-group-justified" role="group" style="margin-top: 10px;">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" onclick="extractPatientInfo()">
+                                <i class="fa fa-user"></i> Patient Info
+                            </button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" onclick="extractObservations()">
+                                <i class="fa fa-bar-chart"></i> Observations
+                            </button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" onclick="getStatistics()">
+                                <i class="fa fa-pie-chart"></i> Statistics
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list-alt"></i> Results</h3>
+                </div>
+                <div class="panel-body">
+                    <div id="loadingIndicator" style="display: none;" class="text-center">
+                        <i class="fa fa-spinner fa-spin fa-2x"></i>
+                        <p>Processing HL7 message...</p>
+                    </div>
+                    
+                    <div id="resultsContainer">
+                        <div class="alert alert-info">
+                            <i class="fa fa-info-circle"></i> 
+                            Enter an HL7 message and click an action button to see results here.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supported Segments Info -->
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-info-circle"></i> Supported HL7 Segments</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        @foreach (var segment in ViewBag.SupportedSegments)
+                        {
+                            <div class="col-md-4">
+                                <span class="label label-primary">@segment</span>
+                            </div>
+                        }
+                    </div>
+                    <hr>
+                    <small class="text-muted">
+                        <strong>MSH:</strong> Message Header, 
+                        <strong>PID:</strong> Patient Identification, 
+                        <strong>OBX:</strong> Observation/Result, 
+                        <strong>OBR:</strong> Observation Request, 
+                        <strong>EVN:</strong> Event Type, 
+                        <strong>PV1:</strong> Patient Visit, 
+                        <strong>NTE:</strong> Notes and Comments
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    // Global variables
+    var currentParsedMessage = null;
+
+    // Load sample message
+    function loadSampleMessage() {
+        $.get('@Url.Action("GetSampleMessage", "HL7Parser")', function(data) {
+            if (data.success) {
+                $('#hl7MessageInput').val(data.sampleMessage);
+                showAlert('success', 'Sample HL7 message loaded successfully!');
+            }
+        });
+    }
+
+    // Clear message
+    function clearMessage() {
+        $('#hl7MessageInput').val('');
+        $('#resultsContainer').html('<div class="alert alert-info"><i class="fa fa-info-circle"></i> Enter an HL7 message and click an action button to see results here.</div>');
+    }
+
+    // Toggle advanced options
+    function toggleAdvancedOptions() {
+        var $options = $('#advancedOptions');
+        var $icon = $('#advancedToggleIcon');
+        
+        if ($options.is(':visible')) {
+            $options.slideUp();
+            $icon.removeClass('fa-chevron-up').addClass('fa-chevron-down');
+        } else {
+            $options.slideDown();
+            $icon.removeClass('fa-chevron-down').addClass('fa-chevron-up');
+        }
+    }
+
+    // Validate message
+    function validateMessage() {
+        var hl7Message = $('#hl7MessageInput').val().trim();
+        if (!hl7Message) {
+            showAlert('warning', 'Please enter an HL7 message first.');
+            return;
+        }
+
+        showLoading();
+        
+        $.post('@Url.Action("ValidateMessage", "HL7Parser")', { hl7Message: hl7Message }, function(data) {
+            hideLoading();
+            
+            if (data.success) {
+                if (data.isValid) {
+                    var alertClass = data.validationErrors && data.validationErrors.length > 0 ? 'warning' : 'success';
+                    var message = data.message;
+                    
+                    if (data.validationErrors && data.validationErrors.length > 0) {
+                        message += '<br><strong>Warnings:</strong><ul>';
+                        data.validationErrors.forEach(function(error) {
+                            message += '<li>' + error + '</li>';
+                        });
+                        message += '</ul>';
+                    }
+                    
+                    showAlert(alertClass, message);
+                } else {
+                    showAlert('danger', data.message);
+                }
+            } else {
+                showAlert('danger', 'Validation failed: ' + data.message);
+            }
+        });
+    }
+
+    // Convert to PDF
+    function convertToPdf() {
+        var hl7Message = $('#hl7MessageInput').val().trim();
+        if (!hl7Message) {
+            showAlert('warning', 'Please enter an HL7 message first.');
+            return;
+        }
+
+        showLoading();
+        
+        var request = {
+            HL7Message: hl7Message,
+            PdfOptions: getPdfOptions(),
+            ParserConfig: getParserConfig()
+        };
+
+        // Create a form and submit it to download the PDF
+        var form = $('<form>', {
+            'method': 'POST',
+            'action': '@Url.Action("ConvertToPdf", "HL7Parser")'
+        });
+
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'HL7Message',
+            'value': request.HL7Message
+        }));
+
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'PdfOptions.Title',
+            'value': request.PdfOptions.Title
+        }));
+
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'PdfOptions.Author',
+            'value': request.PdfOptions.Author
+        }));
+
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'PdfOptions.PageFormat',
+            'value': request.PdfOptions.PageFormat
+        }));
+
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'PdfOptions.Orientation',
+            'value': request.PdfOptions.Orientation
+        }));
+
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'PdfOptions.IncludeHeader',
+            'value': request.PdfOptions.IncludeHeader
+        }));
+
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'PdfOptions.IncludeFooter',
+            'value': request.PdfOptions.IncludeFooter
+        }));
+
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'PdfOptions.IncludeRawData',
+            'value': request.PdfOptions.IncludeRawData
+        }));
+
+        if (request.PdfOptions.WatermarkText) {
+            form.append($('<input>', {
+                'type': 'hidden',
+                'name': 'PdfOptions.WatermarkText',
+                'value': request.PdfOptions.WatermarkText
+            }));
+        }
+
+        $('body').append(form);
+        form.submit();
+        form.remove();
+        
+        hideLoading();
+        showAlert('info', 'PDF generation started. Download should begin shortly.');
+    }
+
+    // Parse message
+    function parseMessage() {
+        var hl7Message = $('#hl7MessageInput').val().trim();
+        if (!hl7Message) {
+            showAlert('warning', 'Please enter an HL7 message first.');
+            return;
+        }
+
+        showLoading();
+        
+        $.post('@Url.Action("ParseMessage", "HL7Parser")', { hl7Message: hl7Message }, function(data) {
+            hideLoading();
+            
+            if (data.success) {
+                currentParsedMessage = data.parsedMessage;
+                displayParseResults(data);
+                showAlert('success', 'HL7 message parsed successfully!');
+            } else {
+                showAlert('danger', 'Parse failed: ' + data.message);
+            }
+        });
+    }
+
+    // Extract patient info
+    function extractPatientInfo() {
+        var hl7Message = $('#hl7MessageInput').val().trim();
+        if (!hl7Message) {
+            showAlert('warning', 'Please enter an HL7 message first.');
+            return;
+        }
+
+        showLoading();
+        
+        $.post('@Url.Action("ExtractPatientInfo", "HL7Parser")', { hl7Message: hl7Message }, function(data) {
+            hideLoading();
+            
+            if (data.success) {
+                displayPatientInfo(data.patientInfo);
+                showAlert('success', 'Patient information extracted successfully!');
+            } else {
+                showAlert('danger', 'Extraction failed: ' + data.message);
+            }
+        });
+    }
+
+    // Extract observations
+    function extractObservations() {
+        var hl7Message = $('#hl7MessageInput').val().trim();
+        if (!hl7Message) {
+            showAlert('warning', 'Please enter an HL7 message first.');
+            return;
+        }
+
+        showLoading();
+        
+        $.post('@Url.Action("ExtractObservationResults", "HL7Parser")', { hl7Message: hl7Message }, function(data) {
+            hideLoading();
+            
+            if (data.success) {
+                displayObservationResults(data.observationResults);
+                showAlert('success', 'Observation results extracted successfully!');
+            } else {
+                showAlert('danger', 'Extraction failed: ' + data.message);
+            }
+        });
+    }
+
+    // Get statistics
+    function getStatistics() {
+        var hl7Message = $('#hl7MessageInput').val().trim();
+        if (!hl7Message) {
+            showAlert('warning', 'Please enter an HL7 message first.');
+            return;
+        }
+
+        showLoading();
+        
+        $.post('@Url.Action("GetMessageStatistics", "HL7Parser")', { hl7Message: hl7Message }, function(data) {
+            hideLoading();
+            
+            if (data.success) {
+                displayStatistics(data.statistics);
+                showAlert('success', 'Message statistics generated successfully!');
+            } else {
+                showAlert('danger', 'Statistics failed: ' + data.message);
+            }
+        });
+    }
+
+    // Helper functions
+    function getPdfOptions() {
+        return {
+            Title: $('#pdfTitle').val() || 'HL7 Message Report',
+            Author: $('#pdfAuthor').val() || 'HSM System',
+            Subject: 'HL7 Message Analysis',
+            PageFormat: parseInt($('#pageFormat').val()) || 0,
+            Orientation: parseInt($('#orientation').val()) || 0,
+            IncludeHeader: $('#includeHeader').is(':checked'),
+            IncludeFooter: $('#includeFooter').is(':checked'),
+            IncludeRawData: $('#includeRawData').is(':checked'),
+            WatermarkText: $('#watermark').val() || null
+        };
+    }
+
+    function getParserConfig() {
+        return {
+            FieldSeparator: $('#fieldSeparator').val() || '|',
+            ComponentSeparator: $('#componentSeparator').val() || '^',
+            RepetitionSeparator: $('#repetitionSeparator').val() || '~',
+            EscapeCharacter: $('#escapeCharacter').val() || '\\',
+            SubComponentSeparator: '&',
+            IncludeUnknownSegments: true,
+            ValidateMessage: $('#validateMessage').is(':checked')
+        };
+    }
+
+    function showLoading() {
+        $('#loadingIndicator').show();
+    }
+
+    function hideLoading() {
+        $('#loadingIndicator').hide();
+    }
+
+    function showAlert(type, message) {
+        var alertHtml = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' +
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+            '<span aria-hidden="true">&times;</span>' +
+            '</button>' +
+            message +
+            '</div>';
+        
+        $('#resultsContainer').prepend(alertHtml);
+        
+        // Auto-dismiss after 5 seconds
+        setTimeout(function() {
+            $('.alert').fadeOut();
+        }, 5000);
+    }
+
+    function displayParseResults(data) {
+        var html = '<div class="panel panel-success">' +
+            '<div class="panel-heading"><h4><i class="fa fa-check"></i> Parse Results</h4></div>' +
+            '<div class="panel-body">' +
+            '<div class="row">' +
+            '<div class="col-md-6">' +
+            '<h5>Message Summary</h5>' +
+            '<pre>' + data.summary + '</pre>' +
+            '</div>' +
+            '<div class="col-md-6">' +
+            '<h5>Segment Statistics</h5>' +
+            '<table class="table table-condensed">';
+        
+        for (var segment in data.statistics) {
+            html += '<tr><td><strong>' + segment + '</strong></td><td>' + data.statistics[segment] + '</td></tr>';
+        }
+        
+        html += '</table></div></div>';
+        
+        if (data.patientInfo && Object.keys(data.patientInfo).length > 0) {
+            html += '<h5>Patient Information</h5>' +
+                '<table class="table table-striped table-condensed">';
+            
+            for (var key in data.patientInfo) {
+                if (data.patientInfo[key]) {
+                    html += '<tr><td><strong>' + key + '</strong></td><td>' + data.patientInfo[key] + '</td></tr>';
+                }
+            }
+            html += '</table>';
+        }
+        
+        html += '</div></div>';
+        
+        $('#resultsContainer').html(html);
+    }
+
+    function displayPatientInfo(patientInfo) {
+        var html = '<div class="panel panel-info">' +
+            '<div class="panel-heading"><h4><i class="fa fa-user"></i> Patient Information</h4></div>' +
+            '<div class="panel-body">' +
+            '<table class="table table-striped">';
+        
+        for (var key in patientInfo) {
+            if (patientInfo[key]) {
+                html += '<tr><td><strong>' + key + '</strong></td><td>' + patientInfo[key] + '</td></tr>';
+            }
+        }
+        
+        html += '</table></div></div>';
+        
+        $('#resultsContainer').html(html);
+    }
+
+    function displayObservationResults(results) {
+        var html = '<div class="panel panel-warning">' +
+            '<div class="panel-heading"><h4><i class="fa fa-bar-chart"></i> Observation Results</h4></div>' +
+            '<div class="panel-body">';
+        
+        if (results && results.length > 0) {
+            results.forEach(function(result, index) {
+                html += '<h5>Observation ' + (index + 1) + '</h5>' +
+                    '<table class="table table-condensed table-bordered">';
+                
+                for (var key in result) {
+                    if (result[key]) {
+                        html += '<tr><td><strong>' + key + '</strong></td><td>' + result[key] + '</td></tr>';
+                    }
+                }
+                html += '</table>';
+            });
+        } else {
+            html += '<div class="alert alert-info">No observation results found in this message.</div>';
+        }
+        
+        html += '</div></div>';
+        
+        $('#resultsContainer').html(html);
+    }
+
+    function displayStatistics(statistics) {
+        var html = '<div class="panel panel-primary">' +
+            '<div class="panel-heading"><h4><i class="fa fa-pie-chart"></i> Message Statistics</h4></div>' +
+            '<div class="panel-body">' +
+            '<div class="row">';
+        
+        var totalSegments = 0;
+        for (var segment in statistics) {
+            totalSegments += statistics[segment];
+        }
+        
+        html += '<div class="col-md-6">' +
+            '<h5>Segment Counts</h5>' +
+            '<table class="table table-striped">';
+        
+        for (var segment in statistics) {
+            var percentage = ((statistics[segment] / totalSegments) * 100).toFixed(1);
+            html += '<tr>' +
+                '<td><strong>' + segment + '</strong></td>' +
+                '<td>' + statistics[segment] + '</td>' +
+                '<td>' +
+                '<div class="progress" style="margin-bottom: 0;">' +
+                '<div class="progress-bar" role="progressbar" style="width: ' + percentage + '%">' +
+                percentage + '%' +
+                '</div>' +
+                '</div>' +
+                '</td>' +
+                '</tr>';
+        }
+        
+        html += '</table></div>' +
+            '<div class="col-md-6">' +
+            '<h5>Summary</h5>' +
+            '<div class="well">' +
+            '<p><strong>Total Segments:</strong> ' + totalSegments + '</p>' +
+            '<p><strong>Unique Segment Types:</strong> ' + Object.keys(statistics).length + '</p>' +
+            '<p><strong>Most Common Segment:</strong> ' + getMostCommonSegment(statistics) + '</p>' +
+            '</div>' +
+            '</div>' +
+            '</div></div></div>';
+        
+        $('#resultsContainer').html(html);
+    }
+
+    function getMostCommonSegment(statistics) {
+        var maxCount = 0;
+        var mostCommon = '';
+        
+        for (var segment in statistics) {
+            if (statistics[segment] > maxCount) {
+                maxCount = statistics[segment];
+                mostCommon = segment;
+            }
+        }
+        
+        return mostCommon + ' (' + maxCount + ')';
+    }
+
+    // Initialize page
+    $(document).ready(function() {
+        // Load sample message on page load for demo
+        loadSampleMessage();
+    });
+</script>
+}
+
+@section Styles {
+<style>
+    .panel-heading .btn {
+        margin-top: -5px;
+        margin-bottom: -5px;
+    }
+    
+    .progress {
+        height: 15px;
+    }
+    
+    .label {
+        margin-right: 5px;
+        margin-bottom: 5px;
+        display: inline-block;
+    }
+    
+    pre {
+        font-size: 11px;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    
+    .table-condensed td {
+        padding: 4px;
+    }
+    
+    .alert {
+        margin-bottom: 10px;
+    }
+    
+    .page-header {
+        margin-top: 0;
+    }
+    
+    #loadingIndicator {
+        padding: 20px;
+    }
+    
+    .fa-spin {
+        color: #337ab7;
+    }
+</style>
+}

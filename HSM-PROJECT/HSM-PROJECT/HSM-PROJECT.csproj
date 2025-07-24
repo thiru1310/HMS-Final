@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -78,6 +78,48 @@
     </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
+    <Reference Include="iTextSharp, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.3\lib\iTextSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Base, Version=3.0.7.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHapi.3.0.7\lib\net35\NHapi.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V21, Version=3.0.7.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHapi.3.0.7\lib\net35\NHapi.Model.V21.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V22, Version=3.0.7.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHapi.3.0.7\lib\net35\NHapi.Model.V22.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V23, Version=3.0.7.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHapi.3.0.7\lib\net35\NHapi.Model.V23.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V231, Version=3.0.7.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHapi.3.0.7\lib\net35\NHapi.Model.V231.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V24, Version=3.0.7.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHapi.3.0.7\lib\net35\NHapi.Model.V24.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V25, Version=3.0.7.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHapi.3.0.7\lib\net35\NHapi.Model.V25.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V251, Version=3.0.7.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHapi.3.0.7\lib\net35\NHapi.Model.V251.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V26, Version=3.0.7.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHapi.3.0.7\lib\net35\NHapi.Model.V26.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V27, Version=3.0.7.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHapi.3.0.7\lib\net35\NHapi.Model.V27.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V271, Version=3.0.7.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHapi.3.0.7\lib\net35\NHapi.Model.V271.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V28, Version=3.0.7.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHapi.3.0.7\lib\net35\NHapi.Model.V28.dll</HintPath>
+    </Reference>
+    <Reference Include="NHapi.Model.V281, Version=3.0.7.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHapi.3.0.7\lib\net35\NHapi.Model.V281.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -129,6 +171,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HL7ParserController.cs" />
     <Compile Include="Controllers\UserDetailController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -178,6 +221,11 @@
     <Compile Include="Models\tblUserDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\HL7Models.cs" />
+    <Compile Include="Services\HL7ParserService.cs" />
+    <Compile Include="Services\PdfGeneratorService.cs" />
+    <Compile Include="Services\HL7ToPdfService.cs" />
+    <Compile Include="TestHL7Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +283,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\UserDetail\Register.cshtml" />
     <Content Include="Views\UserDetail\Login.cshtml" />
+    <Content Include="Views\HL7Parser\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
