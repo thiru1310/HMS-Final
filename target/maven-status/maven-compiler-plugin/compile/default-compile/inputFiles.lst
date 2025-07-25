@@ -1,0 +1,10 @@
+/workspace/src/main/java/com/example/documentsender/entity/DocumentStatus.java
+/workspace/src/main/java/com/example/documentsender/entity/Document.java
+/workspace/src/main/java/com/example/documentsender/service/EmailService.java
+/workspace/src/main/java/com/example/documentsender/DocumentSenderApplication.java
+/workspace/src/main/java/com/example/documentsender/service/DocumentService.java
+/workspace/src/main/java/com/example/documentsender/controller/DocumentController.java
+/workspace/src/main/java/com/example/documentsender/dto/DocumentRequest.java
+/workspace/src/main/java/com/example/documentsender/config/DataInitializer.java
+/workspace/src/main/java/com/example/documentsender/repository/DocumentRepository.java
+/workspace/src/main/java/com/example/documentsender/dto/DocumentResponse.java

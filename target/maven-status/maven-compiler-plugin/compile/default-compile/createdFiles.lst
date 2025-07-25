@@ -1,0 +1,10 @@
+com/example/documentsender/service/EmailService.class
+com/example/documentsender/service/DocumentService.class
+com/example/documentsender/config/DataInitializer.class
+com/example/documentsender/entity/DocumentStatus.class
+com/example/documentsender/entity/Document.class
+com/example/documentsender/controller/DocumentController.class
+com/example/documentsender/repository/DocumentRepository.class
+com/example/documentsender/DocumentSenderApplication.class
+com/example/documentsender/dto/DocumentRequest.class
+com/example/documentsender/dto/DocumentResponse.class
