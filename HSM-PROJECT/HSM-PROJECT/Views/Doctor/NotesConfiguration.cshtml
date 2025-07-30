@@ -1,0 +1,232 @@
+@model IEnumerable<HSM_PROJECT.Models.tblDoctor>
+@{
+    ViewBag.Title = "Notes Configuration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (Session["DoctorId"] == null)
+    {
+        Response.Redirect("~/Doctor/Index");
+    }
+}
+
+<div class="row d-flex justify-content-between">
+    <h2>Notes Configuration for Expertise</h2>
+    <a href="@Url.Action("DoctorAppointment","Doctor", new { id = Session["DoctorId"] })" class="btn btn-primary">Back to Appointments</a>
+</div>
+<br />
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Configure Mandatory Notes by Expertise</h4>
+                </div>
+                <div class="card-body">
+                    <form id="notesConfigForm">
+                        <div class="form-group">
+                            <label for="globalNotesRequired">
+                                <input type="checkbox" id="globalNotesRequired" checked /> 
+                                Make notes mandatory for all appointments
+                            </label>
+                            <small class="form-text text-muted">
+                                When enabled, doctors must enter notes for every appointment before they can confirm, cancel, or logout.
+                            </small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="minNotesLength">Minimum Notes Length:</label>
+                            <input type="number" class="form-control" id="minNotesLength" value="10" min="1" max="500" />
+                            <small class="form-text text-muted">
+                                Minimum number of characters required in notes.
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <h5>Expertise-Specific Settings</h5>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Expertise/Specialization</th>
+                                            <th>Notes Required</th>
+                                            <th>Custom Message</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            var specializations = Model.Select(d => d.Specialization).Distinct().Where(s => !string.IsNullOrEmpty(s));
+                                        }
+                                        @foreach (var specialization in specializations)
+                                        {
+                                            <tr>
+                                                <td>@specialization</td>
+                                                <td>
+                                                    <input type="checkbox" class="expertise-notes-required" 
+                                                           data-expertise="@specialization" checked />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control expertise-message" 
+                                                           data-expertise="@specialization" 
+                                                           placeholder="Custom message for @specialization" 
+                                                           value="Notes are mandatory for @specialization expertise" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success" id="saveConfig">Save Configuration</button>
+                            <button type="button" class="btn btn-secondary" id="resetConfig">Reset to Defaults</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Current Settings</h5>
+                </div>
+                <div class="card-body">
+                    <div id="currentSettings">
+                        <p><strong>Global Notes:</strong> <span id="globalStatus">Required</span></p>
+                        <p><strong>Min Length:</strong> <span id="minLengthStatus">10 characters</span></p>
+                        <p><strong>Active Expertises:</strong></p>
+                        <ul id="activeExpertises">
+                            @foreach (var specialization in specializations)
+                            {
+                                <li>@specialization</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Load saved configuration
+        loadConfiguration();
+        
+        // Update current settings display when form changes
+        $('#globalNotesRequired, #minNotesLength, .expertise-notes-required').on('change input', function() {
+            updateCurrentSettingsDisplay();
+        });
+        
+        // Save configuration
+        $('#saveConfig').click(function() {
+            saveConfiguration();
+        });
+        
+        // Reset configuration
+        $('#resetConfig').click(function() {
+            resetConfiguration();
+        });
+        
+        function loadConfiguration() {
+            // Load from localStorage or server
+            var config = localStorage.getItem('notesConfiguration');
+            if (config) {
+                config = JSON.parse(config);
+                $('#globalNotesRequired').prop('checked', config.globalRequired !== false);
+                $('#minNotesLength').val(config.minLength || 10);
+                
+                if (config.expertises) {
+                    Object.keys(config.expertises).forEach(function(expertise) {
+                        var expertiseConfig = config.expertises[expertise];
+                        $('.expertise-notes-required[data-expertise="' + expertise + '"]')
+                            .prop('checked', expertiseConfig.required !== false);
+                        $('.expertise-message[data-expertise="' + expertise + '"]')
+                            .val(expertiseConfig.message || '');
+                    });
+                }
+            }
+            updateCurrentSettingsDisplay();
+        }
+        
+        function saveConfiguration() {
+            var config = {
+                globalRequired: $('#globalNotesRequired').is(':checked'),
+                minLength: parseInt($('#minNotesLength').val()) || 10,
+                expertises: {}
+            };
+            
+            $('.expertise-notes-required').each(function() {
+                var expertise = $(this).data('expertise');
+                var message = $('.expertise-message[data-expertise="' + expertise + '"]').val();
+                config.expertises[expertise] = {
+                    required: $(this).is(':checked'),
+                    message: message || 'Notes are mandatory for ' + expertise + ' expertise'
+                };
+            });
+            
+            // Save to localStorage
+            localStorage.setItem('notesConfiguration', JSON.stringify(config));
+            
+            // Save to server
+            $.ajax({
+                url: '@Url.Action("SaveNotesConfiguration", "Doctor")',
+                type: 'POST',
+                data: { configuration: JSON.stringify(config) },
+                success: function(response) {
+                    if (response.success) {
+                        alert('Configuration saved successfully!');
+                        updateCurrentSettingsDisplay();
+                    } else {
+                        alert('Error saving configuration: ' + response.message);
+                    }
+                },
+                error: function() {
+                    alert('Error occurred while saving configuration.');
+                }
+            });
+        }
+        
+        function resetConfiguration() {
+            if (confirm('Are you sure you want to reset to default settings?')) {
+                $('#globalNotesRequired').prop('checked', true);
+                $('#minNotesLength').val(10);
+                $('.expertise-notes-required').prop('checked', true);
+                $('.expertise-message').each(function() {
+                    var expertise = $(this).data('expertise');
+                    $(this).val('Notes are mandatory for ' + expertise + ' expertise');
+                });
+                updateCurrentSettingsDisplay();
+            }
+        }
+        
+        function updateCurrentSettingsDisplay() {
+            $('#globalStatus').text($('#globalNotesRequired').is(':checked') ? 'Required' : 'Optional');
+            $('#minLengthStatus').text($('#minNotesLength').val() + ' characters');
+            
+            var activeList = $('#activeExpertises');
+            activeList.empty();
+            $('.expertise-notes-required:checked').each(function() {
+                var expertise = $(this).data('expertise');
+                activeList.append('<li>' + expertise + '</li>');
+            });
+        }
+    });
+</script>
+
+<style>
+    .card {
+        margin-bottom: 20px;
+    }
+    
+    .table td {
+        vertical-align: middle;
+    }
+    
+    .expertise-message {
+        min-width: 200px;
+    }
+</style>

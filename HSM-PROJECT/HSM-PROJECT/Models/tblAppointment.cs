@@ -27,6 +27,8 @@ namespace HSM_PROJECT.Models
         public virtual tblPatient tblPatient { get; set; }
 
         public int Action { get; set; }
+        public string Notes { get; set; }
+        public bool NotesRequired { get; set; }
 
     }
 }
