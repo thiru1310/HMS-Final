@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HSM_PROJECT.Models.tblAppointment>
+@model IEnumerable<HSM_PROJECT.Models.tblAppointment>
 @{
     ViewBag.Title = "DoctorAppointment";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,7 +13,10 @@
         <h2> Appointment for Dr.@Session["DoctorName"].ToString()</h2>
     }
 
-    <a href="@Url.Action("LogOut","Doctor")" class="btn btn-danger"> Logout</a>
+    <div>
+        <a href="@Url.Action("NotesConfiguration","Doctor")" class="btn btn-info mr-2"> Configure Notes</a>
+        <a href="@Url.Action("LogOut","Doctor")" class="btn btn-danger"> Logout</a>
+    </div>
 </div>
 <br />
 <hr />
@@ -34,6 +37,12 @@
         <th>
             StartTime
         </th>
+        <th>
+            Notes
+        </th>
+        <th>
+            Actions
+        </th>
         </thead>
         @foreach (var item in Model)
         {
@@ -51,10 +60,13 @@
                     @Html.DisplayFor(model => item.StartTime)
                 </td>
                 <td>
-                    <input type="button" class="btn btn-success confirm" value="Confirm" />
+                    <textarea class="form-control notes-input" data-appointment-id="@item.AppointmentId" 
+                              placeholder="Enter notes (required for @item.tblDoctor.Specialization)" 
+                              rows="2" style="min-width: 200px;"></textarea>
                 </td>
                 <td>
-                    <input type="button" class="btn btn-danger cancel" value="Cancel"  />
+                    <input type="button" class="btn btn-success confirm" data-appointment-id="@item.AppointmentId" value="Confirm" />
+                    <input type="button" class="btn btn-danger cancel" data-appointment-id="@item.AppointmentId" value="Cancel"  />
                 </td>
             </tr>
         }
@@ -63,9 +75,155 @@
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.confirm').click(function () {
-            $(this).hide();
+        // Track appointments with missing notes
+        var appointmentsWithoutNotes = new Set();
+        
+        // Initialize set with all appointment IDs
+        $('.notes-input').each(function() {
+            appointmentsWithoutNotes.add($(this).data('appointment-id'));
         });
+        
+        // Monitor notes input
+        $('.notes-input').on('input', function() {
+            var appointmentId = $(this).data('appointment-id');
+            var notes = $(this).val().trim();
+            
+            if (notes.length > 0) {
+                appointmentsWithoutNotes.delete(appointmentId);
+                $(this).removeClass('is-invalid').addClass('is-valid');
+            } else {
+                appointmentsWithoutNotes.add(appointmentId);
+                $(this).removeClass('is-valid').addClass('is-invalid');
+            }
+            
+            updateExitButtonState();
+        });
+        
+        // Confirm appointment
+        $('.confirm').click(function () {
+            var appointmentId = $(this).data('appointment-id');
+            var notesInput = $('.notes-input[data-appointment-id="' + appointmentId + '"]');
+            var notes = notesInput.val().trim();
+            
+            if (notes.length === 0) {
+                alert('Notes are mandatory for this expertise. Please enter notes before confirming.');
+                notesInput.focus();
+                return;
+            }
+            
+            // Save notes via AJAX
+            $.ajax({
+                url: '@Url.Action("SaveNotes", "Doctor")',
+                type: 'POST',
+                data: {
+                    appointmentId: appointmentId,
+                    notes: notes,
+                    action: 'confirm'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        appointmentsWithoutNotes.delete(appointmentId);
+                        $(this).hide();
+                        notesInput.prop('disabled', true);
+                        alert('Appointment confirmed and notes saved successfully.');
+                        updateExitButtonState();
+                    } else {
+                        alert('Error saving notes: ' + response.message);
+                    }
+                }.bind(this),
+                error: function() {
+                    alert('Error occurred while saving notes.');
+                }
+            });
+        });
+        
+        // Cancel appointment
+        $('.cancel').click(function () {
+            var appointmentId = $(this).data('appointment-id');
+            var notesInput = $('.notes-input[data-appointment-id="' + appointmentId + '"]');
+            var notes = notesInput.val().trim();
+            
+            if (notes.length === 0) {
+                alert('Notes are mandatory for this expertise. Please enter notes before canceling.');
+                notesInput.focus();
+                return;
+            }
+            
+            if (confirm('Are you sure you want to cancel this appointment?')) {
+                // Save notes via AJAX
+                $.ajax({
+                    url: '@Url.Action("SaveNotes", "Doctor")',
+                    type: 'POST',
+                    data: {
+                        appointmentId: appointmentId,
+                        notes: notes,
+                        action: 'cancel'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            appointmentsWithoutNotes.delete(appointmentId);
+                            $(this).closest('tr').fadeOut();
+                            alert('Appointment canceled and notes saved successfully.');
+                            updateExitButtonState();
+                        } else {
+                            alert('Error saving notes: ' + response.message);
+                        }
+                    }.bind(this),
+                    error: function() {
+                        alert('Error occurred while saving notes.');
+                    }
+                });
+            }
+        });
+        
+        // Prevent page navigation if notes are missing
+        $(window).on('beforeunload', function(e) {
+            if (appointmentsWithoutNotes.size > 0) {
+                var message = 'You have ' + appointmentsWithoutNotes.size + ' appointment(s) without mandatory notes. Please complete all notes before leaving.';
+                e.returnValue = message;
+                return message;
+            }
+        });
+        
+        // Override logout link
+        $('a[href*="LogOut"]').click(function(e) {
+            if (appointmentsWithoutNotes.size > 0) {
+                e.preventDefault();
+                alert('Please complete notes for all appointments before logging out. ' + appointmentsWithoutNotes.size + ' appointment(s) still need notes.');
+                return false;
+            }
+        });
+        
+        function updateExitButtonState() {
+            var logoutBtn = $('a[href*="LogOut"]');
+            if (appointmentsWithoutNotes.size > 0) {
+                logoutBtn.addClass('disabled').attr('title', 'Complete all notes before logging out');
+            } else {
+                logoutBtn.removeClass('disabled').removeAttr('title');
+            }
+        }
+        
+        // Initial state update
+        updateExitButtonState();
     });
 </script>
+
+<style>
+    .notes-input.is-invalid {
+        border-color: #dc3545;
+    }
+    
+    .notes-input.is-valid {
+        border-color: #28a745;
+    }
+    
+    .disabled {
+        opacity: 0.6;
+        pointer-events: none;
+    }
+    
+    .table td {
+        vertical-align: middle;
+    }
+</style>
 
